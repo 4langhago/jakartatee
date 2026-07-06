@@ -6,6 +6,7 @@ import MembershipSection from "@/components/sections/MembershipSection";
 import GolfCourseSection from "@/components/sections/GolfCourseSection";
 import PracticeSection from "@/components/sections/PracticeSection";
 import BookingSummaryModal from "@/components/BookingSummaryModal";
+import WhatsAppSettingsModal from "@/components/WhatsAppSettingsModal";
 import { BookingSummary } from "@/types/booking";
 
 const TABS = [
@@ -20,6 +21,7 @@ type TabId = (typeof TABS)[number]["id"];
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabId>("restaurant");
   const [summary, setSummary] = useState<BookingSummary | null>(null);
+  const [showWaSettings, setShowWaSettings] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#F5F1F8]">
@@ -31,6 +33,13 @@ export default function Home() {
           <div className="flex gap-2">
             <button className="flex h-9 w-9 items-center justify-center rounded-full bg-purple-50 text-gray-500">🏷️</button>
             <button className="flex h-9 w-9 items-center justify-center rounded-full bg-purple-50 text-gray-500">👥</button>
+            <button
+              onClick={() => setShowWaSettings(true)}
+              aria-label="왓츠앱 수신 번호 설정"
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-purple-50 text-gray-500"
+            >
+              ⚙️
+            </button>
           </div>
         </div>
       </header>
@@ -62,6 +71,7 @@ export default function Home() {
       </main>
 
       {summary && <BookingSummaryModal summary={summary} onClose={() => setSummary(null)} />}
+      {showWaSettings && <WhatsAppSettingsModal onClose={() => setShowWaSettings(false)} />}
     </div>
   );
 }
