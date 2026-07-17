@@ -20,6 +20,7 @@ export default function PracticeSection({ onComplete }: { onComplete: (s: Bookin
             <div>
               <h3 className="text-base font-semibold text-gray-800">{range.nameKo}</h3>
               <p className="text-xs text-gray-400">{range.nameEn}</p>
+              <p className="text-xs text-gray-400">{range.area}</p>
             </div>
           }
         >

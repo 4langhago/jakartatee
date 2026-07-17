@@ -29,6 +29,7 @@ export default function ZoneCard({
           <div>
             <h3 className="text-base font-semibold text-gray-800">{zone.nameKo}</h3>
             <p className="text-xs text-gray-400">{zone.nameEn}</p>
+            {zone.phone && <p className="text-xs text-gray-400">{zone.phone}</p>}
           </div>
         </div>
       }
