@@ -70,6 +70,7 @@ export default function ZoneCard({
                 key={c.id}
                 title={`${c.nameEn} (${c.nameKo})`}
                 meta={`${zone.nameKo} 지역`}
+                bookingSubtitle={`${zone.nameKo} 지역`}
                 priceLabel={
                   <div className="text-right text-xs text-gray-500">
                     <div>SAT {formatIDR(c.satPrice)}</div>

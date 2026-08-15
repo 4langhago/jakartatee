@@ -8,12 +8,16 @@ export default function CourseBookingRow({
   title,
   priceLabel,
   meta,
+  bookingSubtitle,
   disabled,
   onComplete,
 }: {
   title: string;
   priceLabel?: ReactNode;
+  /** 카드에 표시되는 부가 정보 (전화번호 등). 왓츠앱 메시지에는 포함되지 않음 */
   meta?: string;
+  /** 왓츠앱 메시지의 "코스/장소" 줄에 실릴 값. 없으면 해당 줄 생략 */
+  bookingSubtitle?: string;
   disabled?: boolean;
   onComplete: (summary: BookingSummary) => void;
 }) {
@@ -32,7 +36,7 @@ export default function CourseBookingRow({
         </div>
         {priceLabel}
       </button>
-      {open && !disabled && <BookingForm kind="golf" title={title} subtitle={meta} onComplete={onComplete} />}
+      {open && !disabled && <BookingForm kind="golf" title={title} subtitle={bookingSubtitle} onComplete={onComplete} />}
     </div>
   );
 }
