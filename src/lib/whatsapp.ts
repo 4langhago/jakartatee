@@ -23,6 +23,16 @@ export function normalizeWhatsAppNumber(raw: string): string {
   return raw.replace(/\D/g, "");
 }
 
+/**
+ * 국가코드 포함 국제형식 번호인지 최소한으로 검증.
+ * - 0으로 시작: 국내형("0812...")으로 국가코드가 빠진 흔한 실수
+ * - 8자리 미만: 국가코드+번호로 보기엔 너무 짧음
+ * - 15자리 초과: E.164 최대 자릿수 초과
+ */
+export function isValidWhatsAppNumber(digits: string): boolean {
+  return digits.length >= 8 && digits.length <= 15 && !digits.startsWith("0");
+}
+
 /** wa.me 링크 생성. number는 국가코드 포함 숫자만. */
 export function buildWhatsAppLink(number: string, text: string): string {
   return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;

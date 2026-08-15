@@ -8,20 +8,23 @@ export default function CourseBookingRow({
   title,
   priceLabel,
   meta,
+  disabled,
   onComplete,
 }: {
   title: string;
   priceLabel?: ReactNode;
   meta?: string;
+  disabled?: boolean;
   onComplete: (summary: BookingSummary) => void;
 }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="rounded-2xl border border-purple-100 p-3">
+    <div className={`rounded-2xl border border-purple-100 p-3 ${disabled ? "opacity-60" : ""}`}>
       <button
         type="button"
+        disabled={disabled}
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between text-left"
+        className="flex w-full items-center justify-between text-left disabled:cursor-not-allowed"
       >
         <div>
           <div className="text-sm font-medium text-gray-800">{title}</div>
@@ -29,7 +32,7 @@ export default function CourseBookingRow({
         </div>
         {priceLabel}
       </button>
-      {open && <BookingForm kind="golf" title={title} subtitle={meta} onComplete={onComplete} />}
+      {open && !disabled && <BookingForm kind="golf" title={title} subtitle={meta} onComplete={onComplete} />}
     </div>
   );
 }

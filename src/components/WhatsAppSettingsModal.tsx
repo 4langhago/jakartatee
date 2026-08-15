@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { getWhatsAppNumber, normalizeWhatsAppNumber, setWhatsAppNumber } from "@/lib/whatsapp";
+import { getWhatsAppNumber, isValidWhatsAppNumber, normalizeWhatsAppNumber, setWhatsAppNumber } from "@/lib/whatsapp";
 
 export default function WhatsAppSettingsModal({ onClose }: { onClose: () => void }) {
   const [value, setValue] = useState(getWhatsAppNumber());
   const digits = normalizeWhatsAppNumber(value);
+  const isInvalid = digits.length > 0 && !isValidWhatsAppNumber(digits);
 
   function handleSave() {
+    if (digits && !isValidWhatsAppNumber(digits)) return;
     setWhatsAppNumber(value);
     onClose();
   }
@@ -33,10 +35,16 @@ export default function WhatsAppSettingsModal({ onClose }: { onClose: () => void
         <p className="mt-2 text-xs text-gray-400">
           국가코드 포함 숫자로 입력하세요 (인도네시아 62…, 한국 82…). 비우고 저장하면 번호가 삭제됩니다.
         </p>
-        {digits && (
-          <p className="mt-1 text-xs text-gray-500">
-            저장될 번호: <span className="font-medium text-gray-700">+{digits}</span>
+        {isInvalid ? (
+          <p className="mt-1 text-xs font-medium text-red-500">
+            ⚠️ 국가코드를 포함한 숫자인지 확인해주세요 (0으로 시작하거나 자릿수가 맞지 않습니다).
           </p>
+        ) : (
+          digits && (
+            <p className="mt-1 text-xs text-gray-500">
+              저장될 번호: <span className="font-medium text-gray-700">+{digits}</span>
+            </p>
+          )
         )}
         <div className="mt-5 flex gap-2">
           <button
@@ -49,7 +57,8 @@ export default function WhatsAppSettingsModal({ onClose }: { onClose: () => void
           <button
             type="button"
             onClick={handleSave}
-            className="w-2/3 rounded-xl bg-[#6750A4] py-2.5 text-sm font-medium text-white active:scale-95"
+            disabled={isInvalid}
+            className="w-2/3 rounded-xl bg-[#6750A4] py-2.5 text-sm font-medium text-white active:scale-95 disabled:opacity-40"
           >
             저장
           </button>

@@ -6,6 +6,7 @@ import {
   buildBookingMessage,
   buildWhatsAppLink,
   getWhatsAppNumber,
+  isValidWhatsAppNumber,
   normalizeWhatsAppNumber,
   setWhatsAppNumber,
 } from "@/lib/whatsapp";
@@ -37,7 +38,11 @@ export default function BookingSummaryModal({
     window.open(buildWhatsAppLink(number, buildBookingMessage(summary)), "_blank", "noopener,noreferrer");
   }
 
+  const numberInputDigits = normalizeWhatsAppNumber(numberInput);
+  const isNumberInputInvalid = numberInputDigits.length > 0 && !isValidWhatsAppNumber(numberInputDigits);
+
   function handleSaveAndSend() {
+    if (!isValidWhatsAppNumber(numberInputDigits)) return;
     const digits = setWhatsAppNumber(numberInput);
     if (!digits) return;
     setWaNumber(digits);
@@ -86,12 +91,18 @@ export default function BookingSummaryModal({
             <button
               type="button"
               onClick={handleSaveAndSend}
-              disabled={!normalizeWhatsAppNumber(numberInput)}
+              disabled={!isValidWhatsAppNumber(numberInputDigits)}
               className="w-full rounded-xl bg-[#25D366] py-2.5 text-sm font-medium text-white active:scale-95 disabled:opacity-40"
             >
               💬 번호 저장 후 왓츠앱으로 전송
             </button>
-            <p className="text-xs text-gray-400">국가코드 포함 숫자 입력 (인도네시아 62…, 한국 82…)</p>
+            {isNumberInputInvalid ? (
+              <p className="text-xs font-medium text-red-500">
+                ⚠️ 국가코드를 포함한 숫자인지 확인해주세요 (0으로 시작하거나 자릿수가 맞지 않습니다).
+              </p>
+            ) : (
+              <p className="text-xs text-gray-400">국가코드 포함 숫자 입력 (인도네시아 62…, 한국 82…)</p>
+            )}
           </div>
         )}
 

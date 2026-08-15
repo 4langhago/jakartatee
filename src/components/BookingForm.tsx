@@ -43,7 +43,11 @@ export default function BookingForm({
   }
 
   const requiredFilled =
-    kind === "golf" ? Boolean(date && players.trim() && phone.trim()) : Boolean(date && name.trim() && phone.trim());
+    kind === "golf"
+      ? Boolean(date && players.trim() && phone.trim())
+      : kind === "restaurant"
+        ? Boolean(date && name.trim() && phone.trim() && period && partySize)
+        : Boolean(date && name.trim() && phone.trim() && period); // practice
 
   function handleSubmit() {
     if (!requiredFilled) return;
@@ -52,7 +56,7 @@ export default function BookingForm({
       title,
       subtitle,
       date,
-      period: kind === "golf" ? period : kind === "restaurant" ? period : undefined,
+      period, // 골프/레스토랑/연습장 모두 선택한 시간대 전달
       partySize: kind === "restaurant" ? partySize : undefined,
       players: kind === "golf" ? players : undefined,
       name: kind !== "golf" ? name : undefined,
