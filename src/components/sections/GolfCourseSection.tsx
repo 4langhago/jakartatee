@@ -9,6 +9,9 @@ export default function GolfCourseSection({ onComplete }: { onComplete: (s: Book
   return (
     <div className="space-y-2">
       <p className="px-1 text-xs text-gray-400">골프장 별 그린피 (평일 / 주말·공휴일 오전 요금 기준, 수시 변동)</p>
+      <p className="px-1 text-xs text-amber-600">
+        ⚠️ 예약 사기 주의 — 표기된 번호는 공식 채널 기준이나 변경될 수 있습니다. 예약금 선입금을 요구하면 중단하고 유선번호로 직접 확인하세요.
+      </p>
       {golfCourses.map((course) => {
         const hasAmPm =
           course.amWeekday !== undefined &&
