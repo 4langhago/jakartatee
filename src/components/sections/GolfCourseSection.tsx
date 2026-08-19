@@ -30,18 +30,18 @@ export default function GolfCourseSection({ onComplete }: { onComplete: (s: Book
               ) : course.holiday !== null ? (
                 <div className="text-right text-xs text-gray-500">
                   {hasAmPm ? (
-                    <>
-                      <div>
-                        평일 오전 {formatIDR(course.amWeekday!)} · 오후 {formatIDR(course.pmWeekday!)}
-                      </div>
-                      <div>
-                        주말 오전 {formatIDR(course.amHoliday!)} · 오후 {formatIDR(course.pmHoliday!)}
-                      </div>
-                    </>
+                    <div className="grid grid-cols-[auto_auto_auto] items-baseline justify-end gap-x-1.5 gap-y-0.5 whitespace-nowrap">
+                      <span className="text-left text-gray-400">평일</span>
+                      <span>오전 {formatIDR(course.amWeekday!)}</span>
+                      <span>오후 {formatIDR(course.pmWeekday!)}</span>
+                      <span className="text-left text-gray-400">주말</span>
+                      <span>오전 {formatIDR(course.amHoliday!)}</span>
+                      <span>오후 {formatIDR(course.pmHoliday!)}</span>
+                    </div>
                   ) : (
                     <>
-                      <div>평일 {formatIDR(course.weekday)}</div>
-                      <div>주말 {formatIDR(course.holiday)}</div>
+                      <div className="whitespace-nowrap">평일 {formatIDR(course.weekday)}</div>
+                      <div className="whitespace-nowrap">주말 {formatIDR(course.holiday)}</div>
                     </>
                   )}
                   {course.note && <div className="mt-0.5 text-amber-600">⚠️ 요금 재확인 필요</div>}

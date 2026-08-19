@@ -28,13 +28,13 @@ export default function CourseBookingRow({
         type="button"
         disabled={disabled}
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between text-left disabled:cursor-not-allowed"
+        className="flex w-full items-start justify-between gap-2 text-left disabled:cursor-not-allowed"
       >
-        <div>
+        <div className="min-w-0 flex-1">
           <div className="text-sm font-medium text-gray-800">{title}</div>
-          {meta && <div className="text-xs text-gray-400">{meta}</div>}
+          {meta && <div className="text-xs text-gray-400 break-words">{meta}</div>}
         </div>
-        {priceLabel}
+        <div className="shrink-0">{priceLabel}</div>
       </button>
       {open && !disabled && <BookingForm kind="golf" title={title} subtitle={bookingSubtitle} onComplete={onComplete} />}
     </div>
